@@ -9,10 +9,10 @@ import pandas as pd
 # ---------------------------
 
 # Placeholder for your Notion integration token
-NOTION_TOKEN = "YOUR_NOTION_INTEGRATION_TOKEN"
+NOTION_TOKEN = "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"
 
 # Replace this with your database ID from Notion
-DATABASE_ID = "YOUR_DATABASE_ID"
+DATABASE_ID = "Explore The Main Films"
 
 # Initialize Notion client
 notion = Client(auth=NOTION_TOKEN)
