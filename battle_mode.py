@@ -39,8 +39,30 @@ def get_battle_eligible_films():
         if battle_eligible:
             title = page['properties']['Film Title']['title'][0]['text']['content'] if page['properties']['Film Title']['title'] else "Untitled"
             image = page['properties']['Default Image']['files'][0]['file']['url'] if page['properties']['Default Image']['files'] else None
-            page_id = page['id']
-            
+            page_id = page['id']def get_battle_eligible_films():
+    results = notion.databases.query(database_id=DATABASE_ID)
+    
+    films = []
+    for page in results['results']:
+        prop = page['properties'].get('Battle Eligible')
+        battle_eligible = False
+
+        # Safe formula checkbox access
+        if prop and prop.get('type') == 'formula':
+            formula_output = prop.get('formula', {})
+            battle_eligible = formula_output.get('checkbox', False)
+
+        if battle_eligible:
+            # Safe access to Film Title
+            title_prop = page['properties'].get('Film Title', {}).get('title', [])
+            title = title_prop[0]['text']['content'] if title_prop else "Untitled"
+
+            # Safe access to Default Image
+            files = page['properties'].get('Default Image', {}).get('files', [])
+            image = files[0]['file']['url'] if files else None
+
+            page_id = page.get('id')
+
             films.append({
                 "id": page_id,
                 "title": title,
@@ -48,6 +70,7 @@ def get_battle_eligible_films():
             })
     
     return films
+            
 # Pull eligible films
 films = get_battle_eligible_films()
 # ---------------------------
