@@ -24,7 +24,18 @@ def get_battle_eligible_films():
     
     films = []
     for page in results['results']:
-        battle_eligible = page['properties']['Battle Eligible']['formula']['checkbox']
+        prop = page['properties'].get('Battle Eligible')
+        battle_eligible = False
+
+        if prop and prop['type'] == 'formula':
+            formula_output = prop['formula']
+            if 'checkbox' in formula_output:
+                battle_eligible = formula_output['checkbox']
+            elif 'string' in formula_output:
+                battle_eligible = formula_output['string'] == "True"
+            elif 'number' in formula_output:
+                battle_eligible = bool(formula_output['number'])
+
         if battle_eligible:
             title = page['properties']['Film Title']['title'][0]['text']['content'] if page['properties']['Film Title']['title'] else "Untitled"
             image = page['properties']['Default Image']['files'][0]['file']['url'] if page['properties']['Default Image']['files'] else None
@@ -37,7 +48,6 @@ def get_battle_eligible_films():
             })
     
     return films
-
 # Pull eligible films
 films = get_battle_eligible_films()
 # ---------------------------
