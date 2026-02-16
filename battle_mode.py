@@ -20,26 +20,21 @@ notion = Client(auth=NOTION_TOKEN)
 # ---------------------------
 
 def get_battle_eligible_films():
-    results = notion.databases.query(
-        **{
-            "database_id": DATABASE_ID,
-            "filter": {
-                "property": "Battle Eligible",
-                "checkbox": {"equals": True}
-            }
-        }
-    )
+    results = notion.databases.query(database_id=DATABASE_ID)
     
     films = []
     for page in results['results']:
-        title = page['properties']['Film Title']['title'][0]['text']['content'] if page['properties']['Film Title']['title'] else "Untitled"
-        image = page['properties']['Default Image']['files'][0]['file']['url'] if page['properties']['Default Image']['files'] else None
-        page_id = page['id']
-        films.append({
-            "id": page_id,
-            "title": title,
-            "image": image
-        })
+        battle_eligible = page['properties']['Battle Eligible']['formula']['checkbox']
+        if battle_eligible:
+            title = page['properties']['Film Title']['title'][0]['text']['content'] if page['properties']['Film Title']['title'] else "Untitled"
+            image = page['properties']['Default Image']['files'][0]['file']['url'] if page['properties']['Default Image']['files'] else None
+            page_id = page['id']
+            
+            films.append({
+                "id": page_id,
+                "title": title,
+                "image": image
+            })
     
     return films
 
