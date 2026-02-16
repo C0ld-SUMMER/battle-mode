@@ -8,11 +8,9 @@ import pandas as pd
 # CONFIGURATION
 # ---------------------------
 
-# Placeholder for your Notion integration token
-NOTION_TOKEN = "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"
-
-# Replace this with your database ID from Notion
-DATABASE_ID = "Explore The Main Films"
+# Load your Notion credentials from Streamlit secrets
+NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
+DATABASE_ID = st.secrets["DATABASE_ID"]
 
 # Initialize Notion client
 notion = Client(auth=NOTION_TOKEN)
