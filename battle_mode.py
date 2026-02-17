@@ -1,29 +1,23 @@
-battle_mode.py
+#battle_mode.py
 
 import streamlit as st
 from notion_client import Client
 import pandas as pd
 
----------------------------
-
-CONFIGURATION
-
----------------------------
-
-Load your Notion credentials from Streamlit secrets
+#Load your Notion credentials from Streamlit secrets
 
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 DATABASE_ID = st.secrets["DATABASE_ID"]
 
-Initialize Notion client
+#Initialize Notion client
 
 notion = Client(auth=NOTION_TOKEN)
 
----------------------------
+#---------------------------
 
-PULL DATA FROM NOTION
+#PULL DATA FROM NOTION
 
----------------------------
+#---------------------------
 
 def get_battle_eligible_films():
 results = notion.databases.query(database_id=DATABASE_ID)
@@ -63,25 +57,25 @@ for page in results['results']:
 
 return films
 
-Pull eligible films
+#Pull eligible films
 
 films = get_battle_eligible_films()
 
----------------------------
+#---------------------------
 
-BATTLE LOGIC
+#BATTLE LOGIC
 
----------------------------
+#---------------------------
 
-Initialize rankings
+#Initialize rankings
 
 ranking = []
 
-Copy of films to track battles
+#Copy of films to track battles
 
 battle_pool = films.copy()
 
-Function to process a battle
+#Function to process a battle
 
 def run_battle(left, right):
 st.write(f"{left['title']} vs {right['title']}")
@@ -95,13 +89,13 @@ with col2:
     if st.button(right['title'], key=f"{right['id']}_vs_{left['id']}"):
         winner = right
 
-return winner
+#return winner
 
----------------------------
+#---------------------------
 
-STREAMLIT UI
+#STREAMLIT UI
 
----------------------------
+#---------------------------
 
 st.title("Battle Mode")
 
@@ -121,7 +115,7 @@ right = battle_pool.pop(0)
         # Wait for user to click a button
         break
 
-Display final ranking
+#Display final ranking
 
 if ranking:
 st.subheader("Current Battle Rankings")
