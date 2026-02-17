@@ -51,18 +51,7 @@ def get_battle_eligible_films():
             else:
                 image = None
             
-            page_id = page['id']def get_battle_eligible_films():
-    results = notion.databases.query(database_id=DATABASE_ID)
-    
-    films = []
-    for page in results['results']:
-        prop = page['properties'].get('Battle Eligible')
-        battle_eligible = False
-
-        # Safe formula checkbox access
-        if prop and prop.get('type') == 'formula':
-            formula_output = prop.get('formula', {})
-            battle_eligible = formula_output.get('checkbox', False)
+            page_id = page['id']
 
         if battle_eligible:
             # Safe access to Film Title
