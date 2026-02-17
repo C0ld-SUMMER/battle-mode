@@ -37,8 +37,9 @@ def get_battle_eligible_films():
                 battle_eligible = bool(formula_output['number'])
 
         if battle_eligible:
-            title = page['properties']['Film Title']['title'][0]['text']['content'] if page['properties']['Film Title']['title'] else "Untitled"
-            image = page['properties']['Default Image']['files'][0]['file']['url'] if page['properties']['Default Image']['files'] else None
+            title = "test"
+            image = None
+            
             page_id = page['id']def get_battle_eligible_films():
     results = notion.databases.query(database_id=DATABASE_ID)
     
