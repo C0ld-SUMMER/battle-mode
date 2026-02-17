@@ -20,8 +20,8 @@ notion = Client(auth=NOTION_TOKEN)
 #---------------------------
 
 def get_battle_eligible_films():
-results = notion.databases.query(database_id=DATABASE_ID)
-films = []
+    results = notion.databases.query(database_id=DATABASE_ID)
+    films = []
 
 for page in results['results']:
     prop = page['properties'].get('Battle Eligible')
