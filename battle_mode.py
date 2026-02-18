@@ -78,8 +78,8 @@ battle_pool = films.copy()
 #Function to process a battle
 
 def run_battle(left, right):
-st.write(f"{left['title']} vs {right['title']}")
-col1, col2 = st.columns(2)
+    st.write(f"{left['title']} vs {right['title']}")
+    col1, col2 = st.columns(2)
 
 winner = None
 with col1:
