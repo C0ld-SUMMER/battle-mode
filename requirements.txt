@@ -1,2 +1,2 @@
-notion-client
 streamlit
+notion-client==2.2.1
